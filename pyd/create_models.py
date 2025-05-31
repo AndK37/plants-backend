@@ -3,14 +3,32 @@ from typing import List
 
 
 
-class CreateGenre(BaseModel):
-    name: str = Field(example='фантастика', min_length=1, max_length=255)
-    desc: str | None = Field(example='Направление и жанр художественной кинематографии, который можно охарактеризовать повышенным уровнем условности.', min_length=0, max_length=255, default=None)
+class CreateUser(BaseModel):
+    surname: str = Field(example='Иванов', min_length=1, max_length=32)
+    name: str = Field(example='Иван', min_length=1, max_length=32)
+    # email: str = Field(example='ivan.ivanov@mail.ru', min_length=5, max_length=64)
+    # login: str = Field(example='ivanych', min_length=1, max_length=32)
+    password: str = Field(example='testpass', min_length=8, max_length=32)
+    # role: int = Field(example=3, default=3)
 
-class CreateFilm(BaseModel):
-    name: str = Field(example='Интерстеллар', min_length=1, max_length=255)
-    year: int = Field(example=2014, gt=0)
-    duration: float = Field(example=169.0, gt=0.0)
-    rating: float = Field(example=8.7, ge=0.0, le=10.0)
-    desc: str | None = Field(example='Когда засуха, пыльные бури и вымирание растений приводят человечество к продовольственному кризису, коллектив исследователей и учёных отправляется сквозь червоточину (которая предположительно соединяет области пространства-времени через большое расстояние) в путешествие, чтобы превзойти прежние ограничения для космических путешествий человека и найти планету с подходящими для человечества условиями.', default=None)
-    genres: List[int] | None = Field(default=[1])
+
+class CreateRole(BaseModel):
+    name: str = Field(example='customer', min_length=1, max_length=32)
+
+
+class CreatePlant(BaseModel):
+    name: str = Field(example='Азалия', min_length=1, max_length=32)
+    desc: str = Field(example='Цветок с яркими цветами, популярен среди цветоводов.', min_length=1, max_length=1024)
+    price: float = Field(example=250.0, gt=0.0)
+    packing: int = Field(example=1, ge=1)
+    category: int = Field(example=3)
+    # seller: int = Field(example=1)
+    image: str | None = Field(default=None)
+
+
+class CreateCategory(BaseModel):
+    name: str = Field(example='flowers', min_length=1, max_length=32)
+
+class CreateReview(BaseModel):
+    plant_id: int = Field(example=1, gt=0)
+    review: str = Field(example='', min_length=1, max_length=4096)
